@@ -1,0 +1,78 @@
+# Editor/IDE/debugger artifacts
+*~
+\#*\#
+.project
+.settings
+.cproject
+.metadata*
+.pydevproject
+*.code-workspace
+.gdb_history
+.vscode
+.*cache*
+GPATH
+GRTAGS
+GSYMS
+GTAGS
+ID
+TAGS
+.stamp.*
+*.versionsBackup
+*.diff
+*.patch
+*.orig
+*.out
+*.BAK
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+
+# Generated output for builds
+/obj/
+
+# CMake artifacts
+/compile_commands.json
+CMakeCache.txt
+CMakeFiles/
+CTestTestfile.cmake
+cmake_install.cmake
+install_manifest.txt
+Makefile
+.cmake/
+googletest/
+
+# Makefile artifacts
+*.a
+*.so
+*.gtest
+*.ctest
+
+# MSVC artifacts
+*.dir/
+x64/
+*.sln
+*.sdf
+*.suo
+*.vcxproj*
+*.vcproj
+*.opensdf
+*.iml
+*.aps
+ipch
+
+# Ninja artifacts
+.ninja_*
+build.ninja
+rules.ninja
+
+# Test Artifacts
+/tmp/
+*-valgrind.txt
+*.log*
+cscope.*
+.cache
+
+# Code coverage
+*.gcov
+*.gcno

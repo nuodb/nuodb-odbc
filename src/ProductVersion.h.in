@@ -1,0 +1,26 @@
+/**
+ * (C) Copyright NuoDB Inc. 2020  All Rights Reserved.
+ *
+ * This software is licensed under the MIT License EXCEPT WHERE OTHERWISE NOTED!
+ * See the LICENSE file provided with this software.
+ */
+
+// This file must consist solely of preprocessor statements.
+
+#define NUOODBC_VERSION_MAJOR    @NUOODBC_VERSION_MAJOR@
+#define NUOODBC_VERSION_MINOR    @NUOODBC_VERSION_MINOR@
+#define NUOODBC_VERSION_MAINT    @NUOODBC_VERSION_MAINT@
+#define NUOODBC_BUILD_KEY        @NUOODBC_BUILD_KEY@
+#define NUOODBC_REVISION_ID      "@NUOODBC_REVISION_ID@"
+
+#define NUOODBC_COMPANY          "NuoDB, Inc."
+#define NUOODBC_PRODUCT          "@NUOODBC_PRODUCT@"
+#define NUOODBC_COPYRIGHT        "@NUOODBC_COPYRIGHT@"
+
+// Helper macros to create version strings
+#define VER_QUOTE_IMPL(val) #val
+#define VER_QUOTE(val)      VER_QUOTE_IMPL(val)
+
+#define NUOODBC_VERSION_STR VER_QUOTE(NUOODBC_VERSION_MAJOR) "." VER_QUOTE(NUOODBC_VERSION_MINOR) "." VER_QUOTE(NUOODBC_VERSION_MAINT)
+
+#define NUOODBC_FULL_VERSION_STR NUOODBC_VERSION_STR "-" NUOODBC_REVISION_ID
