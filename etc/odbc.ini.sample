@@ -1,0 +1,34 @@
+; NuoDB unixODBC DSN example
+;
+; Add this to the system or user odbc INI file.
+;
+; If you've installed into a non-standard location, replace the Driver value
+; with the fully-qualified pathname to the correct location.
+;
+; There are two options for specifying the database connection information.
+; You can use the "Dbname" key: the value is interpreted as a standard NuoDB
+; database selector.  Or you can use the individual keys "Database",
+; "ServerName", and "Port" to specify the values individually.  If "Dbname"
+; is given then the individual keys are ignored.
+; The <port> value is optional in both cases.
+;
+;   <database> : The name of the database
+;   <broker>   : The hostname or IP address of a NuoDB broker
+;   <port>     : (optional) If you use a non-standard port, add this
+;
+; Replace the User, Password, and Schema values.  The Schema is optional.
+
+[NuoODBC]
+Description = NuoDB ODBC Driver DSN
+Driver      = /opt/nuodb/lib64/libNuoODBC.so
+
+; Use EITHER:
+Dbname      = <database>@<broker>[:<port>]
+; OR:
+Database    = <database>
+ServerName  = <broker>
+Port        = <port>
+
+User        = <dbauser>
+Password    = <dbapassword>
+Schema      = <schema>
