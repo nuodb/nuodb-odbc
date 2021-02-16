@@ -1,7 +1,5 @@
 # NuoDB - ODBC
 
-[![Test Results](https://travis-ci.org/nuodb/nuodb-odbc.svg?branch=main)](https://travis-ci.org/nuodb/nuodb-python)
-
 This repository provides the NuoDB_ client library for ODBC.  It is supported
 both on Microsoft Windows and on GNU/Linux (using unixODBC).
 
@@ -28,7 +26,7 @@ On Debian/Ubuntu:
 On Red Hat/CentOS:
 
 ```shell
-  sudo yum install libodbc1
+  sudo yum install unixODBC
 ```
 
 ## On Windows systems:
@@ -89,7 +87,7 @@ On Debian/Ubuntu systems:
 On Red Hat/CentOS systems:
 
 ```shell
-  sudo yum install build-essential cmake unixodbc-dev
+  sudo yum install make gcc gcc-c++ cmake unixODBC-devel
 ```
 
 If you want to build the unit tests, you may install the `googletest` package
