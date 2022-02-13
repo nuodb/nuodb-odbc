@@ -30,6 +30,8 @@ TAGS
 
 # Generated output for builds
 /obj/
+/dist/
+/test-reports/
 
 # CMake artifacts
 /compile_commands.json
