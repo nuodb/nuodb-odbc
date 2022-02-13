@@ -676,7 +676,7 @@ public:
 
     void execDirect(const char* sql) {
         ASSERT_EQ(SQL_SUCCESS, SQLExecDirect(stmt, (SQLCHAR*)sql, SQL_NTS))
-            << sql;
+            << getDiagText(SQL_HANDLE_STMT, stmt) << ":\n  " << sql;
     }
 
     void fetch() {
@@ -690,6 +690,19 @@ public:
 
     void freeStmt() {
         ASSERT_EQ(SQL_SUCCESS, SQLFreeStmt(stmt, SQL_CLOSE)) << "SQLFreeStmt failed";
+    }
+
+    std::string getDiagText(SQLSMALLINT handleType, SQLHANDLE handle) {
+        SQLCHAR txt[1024];
+        SQLCHAR state[6];
+        SQLINTEGER err;
+        SQLSMALLINT len;
+        if (SQLGetDiagRec(handleType, handle, 1, state, &err, txt, 1023, &len) != SQL_SUCCESS) {
+            return "Failed to retrieve diag record";
+        }
+
+        txt[len] = '\0';
+        return std::string((char*)txt);
     }
 
     void createComplianceData()
