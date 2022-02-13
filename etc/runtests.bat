@@ -58,7 +58,7 @@ if errorlevel 1 goto FAIL
 echo Creating database %dbname% ...
 
 :: Create the database
-rmdir /S /Q "%ardir%"
+if exist "%ardir%" rmdir /S /Q "%ardir%"
 cmd /s /c "nuocmd.bat create archive --server-id nuoadmin-0 --db-name %dbname% --archive-path "%ardir%""
 if errorlevel 1 (
     echo %dbname%: Failed to create an archive at %ardir%
@@ -108,14 +108,14 @@ if errorlevel 1 goto FAIL
 cmd /s /c "%instdir%\etc\nuoodbc.bat uninstall"
 if errorlevel 1 goto FAIL
 
-rmdir /S /Q "%tmpdir%"
+:: Leave the temp directory for logs etc.
 
 echo SUCCESS
 exit /b 0
 
 :: ---- Check the AP
 
-:: On Linux we start it if necessary but thst's too hard to manage on Windows
+:: On Linux we start it if necessary but that's too hard to manage on Windows
 :: with all the different ways it could run, needing admin privileges, etc. so
 :: we just require it be started before we run the tests.
 
@@ -178,18 +178,16 @@ if errorlevel 1 (
 )
 
 :delar
-if "%archiveid%" == "" (
-    rmdir /S /Q "%ardir%"
-    exit /b 0
-)
-
+if "%archiveid%" == "" goto rmar
 echo Deleting archive %archiveid%
 cmd /s /c "nuocmd.bat delete archive --archive-id "%archiveid%" --purge"
 if errorlevel 1 (
     echo Cannot delete archive ID %archiveid%
     exit /b 1
 )
-rmdir /S /Q "%ardir%"
+
+:rmar
+if exist "%ardir%" rmdir /S /Q "%ardir%"
 exit /b 0
 
 :: ---- Fail the script

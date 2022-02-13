@@ -54,15 +54,25 @@ static int DebugInit()
         tmpdir = getenv("TMPDIR");
     }
 #endif
-    sprintf(buf, "%s%s%s", tmpdir ? tmpdir : def, sep, dbg_file);
+    if (!tmpdir) {
+        tmpdir = def;
+    }
+    sprintf(buf, "%s%s%s", tmpdir, sep, dbg_file);
     dbg = fopen(buf, "w");
+    if (dbg) {
+        fprintf(dbg, ">> Configuring NuoDB ODBC Driver\n");
+        fflush(dbg);
+    }
     return 1;
 }
 
-static int _loader = DebugInit();
+static int _debugLoader = 0;
 
 void nuoodbc_debug(const char* msg, ...)
 {
+    if (!_debugLoader) {
+        _debugLoader = DebugInit();
+    }
     if (dbg) {
         va_list args;
         va_start(args, msg);
