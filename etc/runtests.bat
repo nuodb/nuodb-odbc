@@ -93,7 +93,22 @@ set "NUODB_DBNAME=%dbname%"
 set "NUODB_USER=%dbauser%"
 set "NUODB_PASSWORD=%dbapwd%"
 
+:: We may not be able to connect immediately due to bootstrap, esp on Windows
+
+set ctr=0
+:startloop
+echo "select 1 from dual;" | nuosql "%dbname%@localhost" --user "%dbauser%" --password "%dbapwd%" >nul 2>&1
+if %ERRORLEVEL% == 0 goto ready
+set /A ctr=%ctr%+1
+if %ctr% GTR 10 (
+    echo Timed out waiting to connect to database %dbname%
+    goto FAIL
+)
+ping -n 2 127.0.0.1 >nul
+goto startloop
+
 :: Poor-man's arg forwarding
+ready:
 %testexe% %3 %4 %5 %6 %7 %8 %9
 if errorlevel 1 (
     echo Unit test %testexe% failed
