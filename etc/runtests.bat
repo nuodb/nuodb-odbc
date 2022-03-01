@@ -108,7 +108,7 @@ ping -n 2 127.0.0.1 >nul
 goto startloop
 
 :: Poor-man's arg forwarding
-ready:
+:ready
 %testexe% %3 %4 %5 %6 %7 %8 %9
 if errorlevel 1 (
     echo Unit test %testexe% failed
