@@ -57,8 +57,10 @@ target_include_directories(gtestlib INTERFACE "${SOURCE_DIR}/googletest/include"
 
 target_link_directories(gtestlib INTERFACE "${BINARY_DIR}/lib")
 
-# Building googletest in Visual Studio in Debug mode generates "d" libraries
-target_link_libraries(gtestlib INTERFACE
-    $<IF:$<AND:$<CONFIG:Debug>,$<CXX_COMPILER_ID:MSVC>>,
-        gtest_maind gtestd,
-        gtest_main gtest>)
+target_link_libraries(gtestlib INTERFACE gtest_main gtest)
+
+# Older versions of googletest used to create "d" libraries in Debug mode
+# but more recent versions don't appear to do that anymore?
+#     $<IF:$<AND:$<CONFIG:Debug>,$<CXX_COMPILER_ID:MSVC>>,
+#         gtest_maind gtestd,
+#         gtest_main gtest>
