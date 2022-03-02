@@ -213,7 +213,7 @@ OdbcConnection::OdbcConnection(OdbcEnv* parent)
     autoCommit = true;
     transactionIsolation = NuoDB::TRANSACTION_SERIALIZABLE;
     driver = DRIVER_FULL_NAME;
-    DBG((">> OdbcConnection"));
+    DBG((">> OdbcConnection '%s'", driver.c_str()));
 }
 
 OdbcConnection::~OdbcConnection()
