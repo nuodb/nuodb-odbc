@@ -123,7 +123,7 @@ if errorlevel 1 goto FAIL
 cmd /s /c "%instdir%\etc\nuoodbc.bat uninstall"
 if errorlevel 1 goto FAIL
 
-rmdir /S /Q "%tmpdir%"
+:: Leave the temp directory for logs etc.
 
 echo SUCCESS
 exit /b 0
