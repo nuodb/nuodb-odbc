@@ -39,6 +39,7 @@
 #include <string>
 #include <set>
 #include <vector>
+#include <iostream>
 #include <stdlib.h>
 #include <math.h>
 
@@ -284,6 +285,8 @@ public:
     {
         RETCODE retcode;
 
+        std::cout << "TestBase: Disconnecting" << std::endl;
+
         if (stmt) {
             retcode =   SQLFreeStmt(stmt, SQL_CLOSE);
             ASSERT_TRUE(hdbc1 == NULL ? retcode != SQL_SUCCESS : retcode == SQL_SUCCESS);
@@ -312,18 +315,20 @@ public:
 
     void connect()
     {
+        std::cout << "TestBase: Connecting" << std::endl;
+
         henv = NULL;
         hdbc1 = NULL;
         stmt = NULL;
 
-        RETCODE retcode;
         // Allocate the ODBC environment and save handle.
-        retcode = SQLAllocHandle(SQL_HANDLE_ENV, NULL, &henv);
-        ASSERT_TRUE(retcode == SQL_SUCCESS);
+        RETCODE retcode = SQLAllocHandle(SQL_HANDLE_ENV, NULL, &henv);
+        ASSERT_TRUE(retcode == SQL_SUCCESS) << "Failed to allocate handle";
 
         // Notify ODBC that this is an ODBC 3.0 app.
-        retcode = SQLSetEnvAttr(henv, SQL_ATTR_ODBC_VERSION, (SQLPOINTER)SQL_OV_ODBC3, SQL_IS_INTEGER);
-        ASSERT_TRUE(retcode == SQL_SUCCESS);
+        retcode = SQLSetEnvAttr(henv, SQL_ATTR_ODBC_VERSION,
+                                (SQLPOINTER)SQL_OV_ODBC3, SQL_IS_INTEGER);
+        ASSERT_TRUE(retcode == SQL_SUCCESS) << "Failed to set version 3.0";
 
         newConnection(hdbc1);
 
@@ -438,8 +443,10 @@ public:
         sprintf(connectString, "Driver=NuoDB ODBC Driver;UID=%s;PWD=%s;DBNAME=%s@%s;",
                 dbauser, dbapwd, dbname, dbhost);
 
+        std::cout << "TestBase: Connecting to " << connectString << std::endl;
+
         char outConnectString[PRETTY_BIG];
-        SQLSMALLINT strlen2;
+        SQLSMALLINT strlen2 = 0;
 
         RETCODE ret = SQLDriverConnect(dbc,
                                        NULL,
@@ -454,9 +461,15 @@ public:
 
         // Unixodbc whines about 'Driver=' but connects anyway.
         if (ret != SQL_SUCCESS && ret != SQL_SUCCESS_WITH_INFO) {
-            EXPECT_TRUE(ret == SQL_SUCCESS || ret == SQL_SUCCESS_WITH_INFO) << "Failed to connect to: " << connectString;
+            std::cerr << "TestBase: SQLDriverConnect " << connectString
+                      << " failed: " << getDiagText(SQL_HANDLE_DBC, dbc)
+                      << " retcode: " << ret
+                      << std::endl;
+
             exit(EXIT_FAILURE);
         }
+
+        std::cout << "TestBase: Connected" << std::endl;
     }
 
 #if !defined(ODBC_WINDOWS)
@@ -523,7 +536,7 @@ public:
         char colbuf[PRETTY_BIG];
         SQLLEN len = 0;
         RETCODE ret = SQLGetData(stmt, index, SQL_C_CHAR, colbuf, PRETTY_BIG-1, &len);
-        EXPECT_EQ(SQL_SUCCESS, ret) << "SQLGetData faild (char)";
+        EXPECT_EQ(SQL_SUCCESS, ret) << "SQLGetData faild (char): " << getDiagText(SQL_HANDLE_STMT, stmt);
         if (ret != SQL_SUCCESS) {
             return std::string();
         }
@@ -541,7 +554,7 @@ public:
         memset(&val, 0, sizeof(val));
         SQLLEN len = 0;
         RETCODE ret = SQLGetData(stmt, index, SQL_C_TYPE_TIMESTAMP, &val, sizeof(val), &len);
-        EXPECT_EQ(SQL_SUCCESS, ret) << "SQLGetData failed (char)";
+        EXPECT_EQ(SQL_SUCCESS, ret) << "SQLGetData failed (timestamp)" << getDiagText(SQL_HANDLE_STMT, stmt);
         if (len == -1) {
             nullValue = true;
         }
@@ -555,7 +568,7 @@ public:
         memset(&val, 0, sizeof(val));
         SQLLEN len = 0;
         RETCODE ret = SQLGetData(stmt, index, SQL_C_TYPE_DATE, &val, sizeof(val), &len);
-        EXPECT_EQ(SQL_SUCCESS, ret) << "SQLGetData failed (date)";
+        EXPECT_EQ(SQL_SUCCESS, ret) << "SQLGetData failed (date)" << getDiagText(SQL_HANDLE_STMT, stmt);
         if (len == -1) {
             nullValue = true;
         }
@@ -569,7 +582,7 @@ public:
         memset(&val, 0, sizeof(val));
         SQLLEN len = 0;
         RETCODE ret = SQLGetData(stmt, index, SQL_C_TYPE_TIME, &val, sizeof(val), &len);
-        EXPECT_EQ(SQL_SUCCESS, ret) << "SQLGetData failed (time)";
+        EXPECT_EQ(SQL_SUCCESS, ret) << "SQLGetData failed (time)" << getDiagText(SQL_HANDLE_STMT, stmt);
         if (len == -1) {
             nullValue = true;
         }
@@ -581,7 +594,7 @@ public:
         SQLINTEGER val = 0;
         SQLLEN len = 0;
         RETCODE ret = SQLGetData(stmt, index, SQL_C_SLONG, &val, sizeof(val), &len);
-        EXPECT_EQ(SQL_SUCCESS, ret) << "SQLGetData failed (int)";
+        EXPECT_EQ(SQL_SUCCESS, ret) << "SQLGetData failed (int)" << getDiagText(SQL_HANDLE_STMT, stmt);
         return val;
     }
 
@@ -591,7 +604,7 @@ public:
         double val = 0;
         SQLLEN len = 0;
         RETCODE ret = SQLGetData(stmt, index, SQL_C_DOUBLE, &val, sizeof(val), &len);
-        EXPECT_EQ(SQL_SUCCESS, ret) << "SQLGetData failed (double)";
+        EXPECT_EQ(SQL_SUCCESS, ret) << "SQLGetData failed (double)" << getDiagText(SQL_HANDLE_STMT, stmt);
         if (len == -1) {
             nullValue = true;
         }
@@ -604,7 +617,7 @@ public:
         SQLINTEGER val = 0;
         SQLLEN len = 0;
         RETCODE ret = SQLGetData(stmt, index, SQL_C_SLONG, &val, sizeof(val), &len);
-        EXPECT_EQ(SQL_SUCCESS, ret) << "SQLGetData failed (int)";
+        EXPECT_EQ(SQL_SUCCESS, ret) << "SQLGetData failed (int, null)" << getDiagText(SQL_HANDLE_STMT, stmt);
         if (len == -1) {
             nullValue = true;
         }
