@@ -28,6 +28,8 @@ endif()
 
 if(WIN32)
     install(PROGRAMS etc/nuoodbc.bat TYPE SYSCONF)
+else()
+    install(PROGRAMS etc/odbc.ini.sample TYPE SYSCONF)
 endif()
 
 message(STATUS "")
