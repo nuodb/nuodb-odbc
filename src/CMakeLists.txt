@@ -94,17 +94,29 @@ target_compile_options(NuoODBC PRIVATE
 
 target_link_libraries(NuoODBC PRIVATE OdbcLib NuoClient Threads::Threads)
 
+set(extralibs NuoRemote nuoclient mpir icu*)
+
 if(WIN32)
     install(TARGETS NuoODBC)
 
     # We need the DLLs as well
-    file(GLOB dlls "${NUOCLIENT_PREFIX}/bin/*.dll")
-    install(PROGRAMS ${dlls} TYPE BIN)
+    set(alldlls)
+    foreach(ex ${extralibs})
+        file(GLOB dlls "${NUOCLIENT_PREFIX}/bin/${ex}.dll")
+        list(APPEND alldlls ${dlls})
+    endforeach()
+
+    install(PROGRAMS ${alldlls} TYPE BIN)
 else()
     # NuoDB puts libraries in lib64, not lib
     install(TARGETS NuoODBC DESTINATION ${NUODB_LIB})
 
     # We need the shared libs as well
-    file(GLOB sos "${NUOCLIENT_PREFIX}/${NUODB_LIB}/*.so*")
-    install(PROGRAMS ${sos} DESTINATION ${NUODB_LIB})
+    set(allsos)
+    foreach(ex ${extralibs})
+        file(GLOB sos "${NUOCLIENT_PREFIX}/${NUODB_LIB}/lib${ex}.so*")
+        list(APPEND allsos ${sos})
+    endforeach()
+
+    install(PROGRAMS ${allsos} DESTINATION ${NUODB_LIB})
 endif()
