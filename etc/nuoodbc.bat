@@ -15,8 +15,12 @@ popd
 set cmd=%1
 
 set "odbcname=NuoDB ODBC Driver"
+
 set "odbcpre=HKLM\Software\ODBC\ODBCINST.INI"
 set "odbcbase=%odbcpre%\%odbcname%"
+set "odbcsrc=ODBC Drivers"
+
+set "odbclog=%TEMP%\nuoodbc-%cmd%.log"
 
 if "%cmd%" == "install" goto installodbc
 if "%cmd%" == "uninstall" goto uninstallodbc
@@ -25,7 +29,7 @@ echo Unknown command: %cmd%
 goto FAIL
 
 :installodbc
-reg query "%odbcpre%\ODBC Drivers" /v "%odbcname%" >nul 2>&1
+reg query "%odbcpre%\%odbcsrc%" /v "%odbcname%" >nul 2>&1
 if not errorlevel 1 (
     echo "%odbcname% is already installed."
     goto FAIL
@@ -41,22 +45,54 @@ if not exist "%dll%" (
 
 echo Setting %odbcname% to use %dll%
 
-reg add "%odbcpre%\ODBC Drivers" /v "%odbcname%" /t REG_SZ /d "Installed" /f >nul
+echo Adding %odbcpre%\%odbcsrc% %odbcname% = "Installed" >"%odbclog%" 2>&1
+reg add "%odbcpre%\%odbcsrc%" /v "%odbcname%" /t REG_SZ /d "Installed" /f >>"%odbclog%" 2>&1
+if ERRORLEVEL 1 goto badinstall
 
-reg add "%odbcbase%" /v Driver              /t REG_SZ /d "%dll%" /f >nul
-reg add "%odbcbase%" /v Setup               /t REG_SZ /d "%dll%" /f >nul
-reg add "%odbcbase%" /v UsageCount          /t REG_DWORD /d 0x00000001 /f >nul
-reg add "%odbcbase%" /v SQLLevel            /t REG_SZ /d "1" /f >nul
-reg add "%odbcbase%" /v FileUsage           /t REG_SZ /d "0" /f >nul
-reg add "%odbcbase%" /v DriverODBCVer       /t REG_SZ /d "03.50" /f >nul
-reg add "%odbcbase%" /v ConnectionFunctions /t REG_SZ /d "YYY" /f >nul
-reg add "%odbcbase%" /v APILevel            /t REG_SZ /d "1" /f >nul
-reg add "%odbcbase%" /v CPTimeout           /t REG_SZ /d "60" /f >nul
+echo Adding %odbcbase% Driver = "%dll%" >>"%odbclog%" 2>&1
+reg add "%odbcbase%" /v Driver /t REG_SZ /d "%dll%" /f >>"%odbclog%" 2>&1
+if ERRORLEVEL 1 goto badinstall
+
+echo Adding %odbcbase% Setup = "%dll%" >>"%odbclog%" 2>&1
+reg add "%odbcbase%" /v Setup /t REG_SZ /d "%dll%" /f >>"%odbclog%" 2>&1
+if ERRORLEVEL 1 goto badinstall
+
+echo Adding %odbcbase% UsageCount = 0x00000001 >>"%odbclog%" 2>&1
+reg add "%odbcbase%" /v UsageCount /t REG_DWORD /d 0x00000001 /f >>"%odbclog%" 2>&1
+if ERRORLEVEL 1 goto badinstall
+
+echo Adding %odbcbase% SQLLevel = 1 >>"%odbclog%" 2>&1
+reg add "%odbcbase%" /v SQLLevel /t REG_SZ /d "1" /f >>"%odbclog%" 2>&1
+if ERRORLEVEL 1 goto badinstall
+
+echo Adding %odbcbase% FileUsage = 0 >>"%odbclog%" 2>&1
+reg add "%odbcbase%" /v FileUsage /t REG_SZ /d "0" /f >>"%odbclog%" 2>&1
+if ERRORLEVEL 1 goto badinstall
+
+echo Adding %odbcbase% DriverODBCVer = 03.50 >>"%odbclog%" 2>&1
+reg add "%odbcbase%" /v DriverODBCVer /t REG_SZ /d "03.50" /f >>"%odbclog%" 2>&1
+if ERRORLEVEL 1 goto badinstall
+
+echo Adding %odbcbase% ConnectionFunctions = YYY >>"%odbclog%" 2>&1
+reg add "%odbcbase%" /v ConnectionFunctions /t REG_SZ /d "YYY" /f >>"%odbclog%" 2>&1
+if ERRORLEVEL 1 goto badinstall
+
+echo Adding %odbcbase% APILevel = 1 >>"%odbclog%" 2>&1
+reg add "%odbcbase%" /v APILevel /t REG_SZ /d "1" /f >>"%odbclog%" 2>&1
+if ERRORLEVEL 1 goto badinstall
+
+echo Adding %odbcbase% CPTimeout = 60 >>"%odbclog%" 2>&1
+reg add "%odbcbase%" /v CPTimeout /t REG_SZ /d "60" /f >>"%odbclog%" 2>&1
+if ERRORLEVEL 1 goto badinstall
 goto COMPLETE
+
+:badinstall
+type "%odbclog%"
+goto FAIL
 
 :uninstallodbc
 echo Removing NuoDB ODBC Driver configuration
-reg delete "%odbcpre%\ODBC Drivers" /v "%odbcname%" /f >nul 2>&1
+reg delete "%odbcpre%\%odbcsrc%" /v "%odbcname%" /f >nul 2>&1
 reg delete "%odbcbase%" /f >nul 2>&1
 goto COMPLETE
 
