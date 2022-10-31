@@ -123,5 +123,6 @@ GEN(Bytes, NuoDB::Bytes)
 GEN(Time, NuoDB::Time*)
 GEN(Date, NuoDB::Date*)
 GEN(Timestamp, NuoDB::Timestamp*)
+GEN(TimestampNoTZ, NuoDB::TimestampNoTZ*)
 
 #undef GEN

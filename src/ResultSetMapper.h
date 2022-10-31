@@ -72,6 +72,8 @@ public:
     virtual NuoDB::Time*      getTime(const char* columnName);
     virtual NuoDB::Timestamp* getTimestamp(int id);
     virtual NuoDB::Timestamp* getTimestamp(const char* columnName);
+    virtual NuoDB::TimestampNoTZ* getTimestampNoTZ(int id);
+    virtual NuoDB::TimestampNoTZ* getTimestampNoTZ(const char* columnName);
     virtual NuoDB::Blob*      getBlob(int index);
     virtual NuoDB::Blob*      getBlob(const char* columnName);
     virtual NuoDB::Clob*      getClob(int index);
