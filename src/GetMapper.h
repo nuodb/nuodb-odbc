@@ -23,6 +23,7 @@ class RowId;
 class SQLWarning;
 class Time;
 class Timestamp;
+class TimestampNoTZ;
 }
 
 /**
@@ -54,11 +55,12 @@ public:
     virtual NuoDB::Blob*    getBlob(NuoDB::Blob* value);
     virtual NuoDB::Clob*    getClob(NuoDB::Clob* value);
 
-    virtual NuoDB::Bytes        getBytes(NuoDB::Bytes value);
-    virtual NuoDB::Date*        getDate(NuoDB::Date* value);
-    virtual NuoDB::Time*        getTime(NuoDB::Time* value);
-    virtual NuoDB::Timestamp*   getTimestamp(NuoDB::Timestamp* value);
-    virtual NuoDB::BigDecimal*  getBigDecimal(NuoDB::BigDecimal* value);
+    virtual NuoDB::Bytes          getBytes(NuoDB::Bytes value);
+    virtual NuoDB::Date*          getDate(NuoDB::Date* value);
+    virtual NuoDB::Time*          getTime(NuoDB::Time* value);
+    virtual NuoDB::Timestamp*     getTimestamp(NuoDB::Timestamp* value);
+    virtual NuoDB::TimestampNoTZ* getTimestampNoTZ(NuoDB::TimestampNoTZ* value);
+    virtual NuoDB::BigDecimal*    getBigDecimal(NuoDB::BigDecimal* value);
 
 private:
     std::string columnToMap;
