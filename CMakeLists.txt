@@ -3,14 +3,14 @@
 # This software is licensed under the MIT License EXCEPT WHERE OTHERWISE NOTED!
 # See the LICENSE file provided with this software.
 
-set(NUOODBC_COPYRIGHT "(C) Copyright NuoDB, Inc. 2011-2022  All Rights Reserved.")
+set(NUOODBC_COPYRIGHT "(C) Copyright NuoDB, Inc. 2011-2023  All Rights Reserved.")
 
 cmake_minimum_required(VERSION 3.12)
 
 project(NuoODBC CXX)
 
 set(NUOODBC_PRODUCT "NuoDB ODBC Driver")
-set(NUOODBC_VERSION 2 0 1)
+set(NUOODBC_VERSION 2 0 2)
 
 include(FindThreads)
 include(CTest)
