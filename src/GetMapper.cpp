@@ -21,6 +21,7 @@ GEN(Time, NuoDB::Time*)
 GEN(Bytes, NuoDB::Bytes)
 GEN(Date, NuoDB::Date*)
 GEN(Timestamp, NuoDB::Timestamp*)
+GEN(TimestampNoTZ, NuoDB::TimestampNoTZ*)
 GEN(BigDecimal, NuoDB::BigDecimal*)
 
 GEN(Boolean, bool)
