@@ -637,7 +637,7 @@ RETCODE OdbcConnection::sqlGetInfo(SQLUSMALLINT type, SQLPOINTER ptr, SQLSMALLIN
 
             case SQL_STATIC_CURSOR_ATTRIBUTES1:
             case SQL_STATIC_CURSOR_ATTRIBUTES2:
-                value = 0;
+                value = 2;
                 break;
 
             case SQL_FORWARD_ONLY_CURSOR_ATTRIBUTES1:
