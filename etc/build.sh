@@ -51,7 +51,9 @@ EOF
 esac
 
 download=https://ce-downloads.nuohub.org
-arch=linux.$(uname -m)
+mach=$(uname -m)
+test "$mach" = aarch64 && mach=arm64
+arch=linux.$mach
 
 tmpdir=${BUILDTEMP:-$(mktemp -t -d nuo.XXXXXX)}
 mkdir -p "$BUILDTEMP"
