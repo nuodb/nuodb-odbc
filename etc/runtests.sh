@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# (C) Copyright NuoDB, Inc. 2020  All Rights Reserved.
+# (C) Copyright 2020-2026 Dassault Systemes SE.  All Rights Reserved.
 #
 # This software is licensed under the MIT License EXCEPT WHERE OTHERWISE NOTED!
 # See the LICENSE file provided with this software.

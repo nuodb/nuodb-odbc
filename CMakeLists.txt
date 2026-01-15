@@ -1,9 +1,9 @@
-# (C) Copyright NuoDB Inc. 2022  All Rights Reserved.
+# (C) Copyright 2022-2026 Dassault Systemes SE.  All Rights Reserved.
 #
 # This software is licensed under the MIT License EXCEPT WHERE OTHERWISE NOTED!
 # See the LICENSE file provided with this software.
 
-set(NUOODBC_COPYRIGHT "(C) Copyright NuoDB, Inc. 2011-2023  All Rights Reserved.")
+set(NUOODBC_COPYRIGHT "(C) Copyright 2011-2026 Dassault Systemes SE.  All Rights Reserved.")
 
 cmake_minimum_required(VERSION 3.12)
 

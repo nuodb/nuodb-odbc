@@ -1,7 +1,7 @@
 @echo off
 :: -- Manage NuoDB ODBC driver from the command line
 :: On Windows we can only have one NuoDB ODBC driver installed at a time
-:: (C) Copyright 2019-2020 NuoDB, Inc.  All Rights Reserved.
+:: (C) Copyright 2019-2026 Dassault Systemes SE.  All Rights Reserved.
 ::
 :: This software is licensed under the MIT License EXCEPT WHERE OTHERWISE NOTED!
 :: See the LICENSE file provided with this software.

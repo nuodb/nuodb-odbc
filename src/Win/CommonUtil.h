@@ -14,7 +14,7 @@
  *  The Original Code was created by Vladimir Tsvigun for IBPhoenix.
  *
  *  Copyright (c) 2005 Vladimir Tsvigun  All Rights Reserved.
- *  (C) Copyright 2011-2020 NuoDB, Inc.  All Rights Reserved.
+ *  (C) Copyright 2011-2026 Dassault Systemes SE.  All Rights Reserved.
  */
 
 #if !defined(_CommonUtil_h_)

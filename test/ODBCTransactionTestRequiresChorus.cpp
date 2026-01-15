@@ -1,5 +1,5 @@
 /**
- * (C) Copyright 2016-2020 NuoDB, Inc.  All Rights Reserved.
+ * (C) Copyright 2016-2026 Dassault Systemes SE.  All Rights Reserved.
  *
  * This software is licensed under the MIT License EXCEPT WHERE OTHERWISE NOTED!
  * See the LICENSE file provided with this software.

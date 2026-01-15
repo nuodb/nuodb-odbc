@@ -14,7 +14,7 @@
  *  The Original Code was created by James A. Starkey for IBPhoenix.
  *
  *  Copyright (c) 1999, 2000, 2001 James A. Starkey  All Rights Reserved.
- *  (C) Copyright 2011-2020 NuoDB, Inc.  All Rights Reserved.
+ *  (C) Copyright 2011-2026 Dassault Systemes SE.  All Rights Reserved.
  */
 
 #pragma once
