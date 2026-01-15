@@ -64,10 +64,9 @@ use:
 
 The NuoDB ODBC driver can be built on GNU/Linux and on Windows.
 
-You will need NuoDB 4.1.1 or above to build the driver.  You can build using
-either the
-[NuoDB database package](https://www.nuodb.com/dev-center/community-edition-download)
-or with the [NuoDB client package](https://github.com/nuodb/nuodb-client).
+You will need the NuoDB C++ client to build this driver.  You can find the C++
+client in either the NuoDB server package or in the
+[NuoDB client package](https://github.com/nuodb/nuodb-client).
 
 ## Install Prerequisites
 
@@ -222,6 +221,7 @@ configuration (e.g. `obj\dist`), and `<testexe>` is the unit test to be run
 
 # Resources
 
-* [NuoDB Documentation](https://doc.nuodb.com/Latest/Default.htm)
-* [NuoDB Database Download](https://www.nuodb.com/dev-center/community-edition-download)
-* [NuoDB Client Download](https://github.com/nuodb/nuodb-client/releases)
+* [NuoDB](https://www.nuodb.com/)
+* [NuoDB Documentation](https://doc.nuodb.com/nuodb/latest/introduction-to-nuodb/)
+* [Quick Start Guides / Docker](https://doc.nuodb.com/nuodb/latest/quick-start-guide/docker/)
+* [NuoDB Client Package](https://github.com/nuodb/nuodb-client/releases)
