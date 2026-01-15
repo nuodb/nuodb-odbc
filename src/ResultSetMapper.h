@@ -12,8 +12,8 @@
 
 #include "NuoRemote/Bytes.h"
 #include "NuoRemote/ResultSet.h"
+#include "GetMapper.h"
 
-class GetMapper;
 class ResultSetFilter;
 
 /**
@@ -49,13 +49,10 @@ public:
 
     virtual NuoDB::ResultSetMetaData* getMetaData();
 
-    virtual const char*           getString(int columnIndex, int* n_chars);
-    virtual const char*           getString(int id);
-    virtual const char*           getString(const char* columnName);
-    virtual char                  getByte(int id);
-    virtual char                  getByte(const char* columnName);
     virtual bool                  getBoolean(int id);
     virtual bool                  getBoolean(const char* columnName);
+    virtual char                  getByte(int id);
+    virtual char                  getByte(const char* columnName);
     virtual short                 getShort(int id);
     virtual short                 getShort(const char* columnName);
     virtual int32_t               getInt(int id);
@@ -66,6 +63,15 @@ public:
     virtual float                 getFloat(const char* columnName);
     virtual double                getDouble(int id);
     virtual double                getDouble(const char* columnName);
+    virtual const char*           getString(int id);
+    virtual const char*           getString(const char* columnName);
+    virtual const char*           getString(int columnIndex, int* n_chars);
+    virtual NuoDB::Bytes          getBytes(int index);
+    virtual NuoDB::Bytes          getBytes(const char* columnName);
+    virtual NuoDB::Blob*          getBlob(int index);
+    virtual NuoDB::Blob*          getBlob(const char* columnName);
+    virtual NuoDB::Clob*          getClob(int index);
+    virtual NuoDB::Clob*          getClob(const char* columnName);
     virtual NuoDB::Date*          getDate(int id);
     virtual NuoDB::Date*          getDate(const char* columnName);
     virtual NuoDB::Time*          getTime(int id);
@@ -74,12 +80,8 @@ public:
     virtual NuoDB::Timestamp*     getTimestamp(const char* columnName);
     virtual NuoDB::TimestampNoTZ* getTimestampNoTZ(int id);
     virtual NuoDB::TimestampNoTZ* getTimestampNoTZ(const char* columnName);
-    virtual NuoDB::Blob*          getBlob(int index);
-    virtual NuoDB::Blob*          getBlob(const char* columnName);
-    virtual NuoDB::Clob*          getClob(int index);
-    virtual NuoDB::Clob*          getClob(const char* columnName);
-    virtual NuoDB::Bytes          getBytes(int index);
-    virtual NuoDB::Bytes          getBytes(const char* columnName);
+    virtual NuoDB::VectorDouble*  getVectorDouble(int index);
+    virtual NuoDB::VectorDouble*  getVectorDouble(const char* columnName);
 
 private:
     NuoDB::ResultSet* base;

@@ -24,6 +24,8 @@ class SQLWarning;
 class Time;
 class Timestamp;
 class TimestampNoTZ;
+template <class type> class Vector;
+using VectorDouble = Vector<double>;
 }
 
 /**
@@ -43,24 +45,26 @@ public:
 
     const char* getColumn() const { return columnToMap.c_str(); }
 
-    virtual const char* getString(const char* value);
-    virtual char        getByte(char value);
     virtual bool        getBoolean(bool value);
+    virtual char        getByte(char value);
     virtual short       getShort(short value);
     virtual int32_t     getInt(int32_t value);
     virtual int64_t     getLong(int64_t value);
     virtual float       getFloat(float value);
     virtual double      getDouble(double value);
 
-    virtual NuoDB::Blob*    getBlob(NuoDB::Blob* value);
-    virtual NuoDB::Clob*    getClob(NuoDB::Clob* value);
+    virtual const char*  getString(const char* value);
+    virtual NuoDB::Bytes getBytes(NuoDB::Bytes value);
 
-    virtual NuoDB::Bytes          getBytes(NuoDB::Bytes value);
+    virtual NuoDB::Blob* getBlob(NuoDB::Blob* value);
+    virtual NuoDB::Clob* getClob(NuoDB::Clob* value);
+
     virtual NuoDB::Date*          getDate(NuoDB::Date* value);
     virtual NuoDB::Time*          getTime(NuoDB::Time* value);
     virtual NuoDB::Timestamp*     getTimestamp(NuoDB::Timestamp* value);
     virtual NuoDB::TimestampNoTZ* getTimestampNoTZ(NuoDB::TimestampNoTZ* value);
     virtual NuoDB::BigDecimal*    getBigDecimal(NuoDB::BigDecimal* value);
+    virtual NuoDB::VectorDouble*  getVectorDouble(NuoDB::VectorDouble* value);
 
 private:
     std::string columnToMap;

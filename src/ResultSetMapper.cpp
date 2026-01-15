@@ -5,13 +5,13 @@
  * See the LICENSE file provided with this software.
  */
 
+#include "ResultSetMapper.h"
+
 #include <string.h>
 #include <cassert>
 
-#include "ResultSetMapper.h"
-
+#include "NuoRemote/SqlExports.h"
 #include "NuoRemote/ResultSetMetaData.h"
-#include "GetMapper.h"
 #include "ResultSetFilter.h"
 
 using namespace NuoDB;
@@ -108,21 +108,32 @@ const char* ResultSetMapper::getString(int columnIndex, int* n_chars)
         return base->get ## NAME(column);                               \
     }
 
-GEN(String, const char*)
-GEN(Byte, char)
 GEN(Boolean, bool)
+GEN(Byte, char)
 GEN(Short, short)
 GEN(Int, int32_t)
 GEN(Long, int64_t)
 GEN(Float, float)
 GEN(Double, double)
-
+GEN(String, const char*)
+GEN(Bytes, NuoDB::Bytes)
 GEN(Blob, NuoDB::Blob*)
 GEN(Clob, NuoDB::Clob*)
-GEN(Bytes, NuoDB::Bytes)
 GEN(Time, NuoDB::Time*)
 GEN(Date, NuoDB::Date*)
 GEN(Timestamp, NuoDB::Timestamp*)
 GEN(TimestampNoTZ, NuoDB::TimestampNoTZ*)
+#if NUODB_CPPDRIVER_MAJOR >= 21
+GEN(VectorDouble, NuoDB::VectorDouble*)
+#else
+NuoDB::VectorDouble* ResultSetMapper::getVectorDouble(int index)
+{
+    return nullptr;
+}
+NuoDB::VectorDouble* ResultSetMapper::getVectorDouble(const char* columnName)
+{
+    return nullptr;
+}
+#endif
 
 #undef GEN
